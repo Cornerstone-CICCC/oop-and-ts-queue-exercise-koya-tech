@@ -8,6 +8,17 @@ const Queue = require('../lib/Queue')
 
 function processReturns(queue) {
   // your code here
+  let tempQueue = new Queue()
+  while (!queue.isEmpty()) {
+    let person = queue.dequeue()
+    let total = person.books.reduce((acc, book) => acc + book.daysLate * 2, 0)
+    if (total > 0) {
+      tempQueue.enqueue(person)
+    }
+  }
+  while (!tempQueue.isEmpty()) {
+    queue.enqueue(tempQueue.dequeue())
+  }
 }
 
 const returns = new Queue();
